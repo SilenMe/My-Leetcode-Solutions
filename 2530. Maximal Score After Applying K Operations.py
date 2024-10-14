@@ -4,10 +4,12 @@ class Solution:
         ans=0
         minHeapArr=[-n for n in nums]
         heapq.heapify(minHeapArr)
+        
         while k:
             n=-heapq.heappop(minHeapArr)
             ans+=n
             k-=1
-            heapq.heappush(minHeapArr,-((n//3)+1))
+            heapq.heappush(minHeapArr,-math.ceil(n/3))
         return ans
+
         
