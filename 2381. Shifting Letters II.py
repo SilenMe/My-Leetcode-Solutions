@@ -14,3 +14,18 @@ class Solution:
             ordFin=(ord(s[i])-97+ordAdd)%26
             sol+=chr(97+ordFin)
         return sol
+
+#optimized it by using prefix-sum technique, This was the really tricky part
+class Solution:
+    def shiftingLetters(self, s: str, shifts: List[List[int]]) -> str:
+        indx = [0] * (len(s) + 1)
+        for a, b, d in shifts:
+            indx[b + 1] += 1 if d else -1
+            indx[a] += -1 if d else 1
+        diff = 0
+        res = [ord(c) - ord("a") for c in s]
+        for i in reversed(range(len(indx))):
+            diff += indx[i]
+            res[i - 1] = (diff + res[i - 1] + 26) % 26
+        s = [chr(ord("a") + n) for n in res]
+        return "".join(s)
